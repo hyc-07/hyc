@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hyc-download</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --dark: #1b263b;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --white: #ffffff;
+    }
+    body {
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      flex: 1;
+    }
+    .logo {
+      margin: 40px 0 20px;
+      font-size: 2.8em;
+      font-weight: 800;
+      color: var(--primary);
+      text-align: center;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .game-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      margin: 20px auto;
+      max-width: 900px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .game-title {
+      font-size: 2em;
+      margin: 0;
+      color: var(--dark);
+      font-weight: 700;
+    }
+    .game-version {
+      background: rgba(67, 97, 238, 0.1);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    .game-details {
+      flex: 1;
+    }
+    .detail-item {
+      display: flex;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+    .detail-label {
+      font-weight: 600;
+      min-width: 120px;
+      color: var(--gray);
+      font-size: 0.95em;
+    }
+    .detail-value {
+      font-weight: 500;
+    }
+    .download-area {
+      flex: 1;
+      text-align: center;
+      padding: 30px;
+      background: rgba(67, 97, 238, 0.03);
+      border-radius: 12px;
+      border: 1px dashed rgba(67, 97, 238, 0.2);
+    }
+    .download-title {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .download-subtitle {
+      color: var(--gray);
+      margin-bottom: 25px;
+      font-size: 0.95em;
+    }
+    .download-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      font-size: 1em;
+      min-width: 220px;
+      box-sizing: border-box;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-windows {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-mac {
+      background: var(--dark);
+      color: white;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    .btn-windows:hover {
+      background: var(--secondary);
+    }
+    .btn-mac:hover {
+      background: #2d3748;
+    }
+    footer {
+      margin-top: 60px;
+      color: var(--gray);
+      font-size: 0.9em;
+      text-align: center;
+      padding: 20px;
+      background: var(--light);
+    }
+    .copyright {
+      margin-bottom: 10px;
+    }
+    .contact {
+      font-size: 0.85em;
+    }
+    /* 横屏布局 */
+    @media (min-width: 768px) and (orientation: landscape) {
+      .card-content {
+        flex-direction: row;
+        align-items: center;
+      }
+      .download-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+      .btn {
+        min-width: 200px;
+      }
+    }
+    /* 竖屏布局 */
+    @media (max-width: 767px), (orientation: portrait) {
+      .game-card {
+        padding: 30px 20px;
+      }
+      .game-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .download-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">hyc-download</div>
+
+  <div class="game-card">
+    <div class="game-header">
+      <h1 class="game-title">hyc_v1.3.7</h1>
+      <span class="game-version">v1.3.7</span>
+    </div>
+
+    <div class="card-content">
+      <div class="game-details">
+        <div class="detail-item">
+          <span class="detail-label">软件版本:</span>
+          <span class="detail-value">v1.3.7</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">系统要求:</span>
+          <span class="detail-value">Windows/MacOS(ARM64)</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">文件大小:</span>
+          <span class="detail-value">25MB/50MB</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">更新时间:</span>
+          <span class="detail-value">2025-07-30</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">开发者:</span>
+          <span class="detail-value">hyc</span>
+        </div>
+      </div>
+
+      <div class="download-area">
+        <h2 class="download-title">立即下载</h2>
+        <p class="download-subtitle">选择您的操作系统版本 <a href="index2.html" target="_blank">MacOS下载前看我</a></p>
+        <div class="download-buttons">
+          <a href="https://github.com/hyc-07/hyc/releases/download/hyc/hyc_v1.3.7.exe" class="btn btn-windows">Windows 版下载</a>
+          <a href="https://github.com/hyc-07/hyc/releases/download/hyc/hyc_v1.3.7.app.zip" class="btn btn-mac">macOS 版下载</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
