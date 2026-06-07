@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>版本检测</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      width: 340px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.15);
+      text-align: center;
+    }
+
+    .icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .version {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .status {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: default;
+    }
+
+    .latest { background: #e8f5e9; color: #2e7d32; }
+    .update { background: #fff3e0; color: #ef6c00; }
+    .preview { background: #e3f2fd; color: #1565c0; }
+    .error  { background: #ffebee; color: #c62828; }
+  </style>
+</head>
+
+<body>
+<div class="card">
+  <div class="icon" id="icon">🔍</div>
+  <h2>版本检测结果</h2>
+  <div class="version">最新版本：<strong>v1.4.6</strong></div>
+
+  <a id="result" class="status">检测中...</a>
+</div>
+
+<script>
+  const LATEST = "1.4.6";
+
+  function getUserVersion() {
+    return new URLSearchParams(location.search).get("version");
+  }
+
+  function compare(v1, v2) {
+    const a = v1.split(".").map(Number);
+    const b = v2.split(".").map(Number);
+    for (let i = 0; i < 3; i++) {
+      if ((a[i] || 0) < (b[i] || 0)) return -1;
+      if ((a[i] || 0) > (b[i] || 0)) return 1;
+    }
+    return 0;
+  }
+
+  const userVersion = getUserVersion();
+  const result = document.getElementById("result");
+  const icon = document.getElementById("icon");
+
+  if (!userVersion) {
+    icon.innerText = "❌";
+    result.className = "status error";
+    result.innerHTML = "未检测到版本号";
+    result.removeAttribute("href");
+  } else {
+    const r = compare(userVersion, LATEST);
+
+    if (r < 0) {
+      icon.innerText = "⚠️";
+      result.className = "status update";
+      result.href = "hyc.html";
+      result.innerHTML = "发现新版本 v1.4.5，点击更新";
+    } else if (r === 0) {
+      icon.innerText = "✅";
+      result.className = "status latest";
+      result.innerHTML = "你已是最新版本";
+      result.removeAttribute("href");
+    } else {
+      icon.innerText = "🚀";
+      result.className = "status preview";
+      result.innerHTML = "你正在使用预览版本";
+      result.removeAttribute("href");
+    }
+  }
+</script>
+</body>
+</html>
