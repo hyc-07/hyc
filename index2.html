@@ -110,23 +110,33 @@
 
 <!-- 问题 2 -->
 <div class="warning">
-    <strong>问题 2：</strong>macOS 提示“hyc_v1.3.7 已损坏，无法打开。你应该将它移到废纸篓”
+    <strong>问题 2：</strong>macOS 提示“hyc_v1.4.6 已损坏，无法打开。你应该将它移到废纸篓”
 </div>
 
 <div class="step">
-    <div class="step-number">解决方法：移除 macOS 的隔离属性</div>
+    <div class="step-number">解决方法：将应用拖入终端解除限制</div>
     <ol>
-        <li>在 Finder 中右键 hyc → <strong>显示简介</strong> → 复制应用路径</li>
+        <li>打开 <strong>Finder</strong>，找到 <strong>hyc_v1.3.7</strong></li>
         <li>打开 <strong>启动台 → 其他 → 终端</strong></li>
-        <li>输入以下命令（将“粘贴的路径”替换为真实路径）：
-            <br><br>
-            <code>sudo xattr -rd com.apple.quarantine 粘贴的路径</code>
-            <br><br>
+        <li>
+            在终端中输入以下命令（先不要按回车）：
+            <div style="
+                margin: 8px 0;
+                padding: 10px 12px;
+                background: #f4f4f4;
+                border-radius: 6px;
+                font-family: Menlo, Monaco, monospace;
+                font-size: 13px;
+                line-height: 1.4;
+            ">
+                sudo xattr -rd com.apple.quarantine
+            </div>
         </li>
-        <li>回车并输入电脑开机密码（输入时不显示，属正常现象）</li>
+        <li><strong>直接将 hyc 应用拖到终端窗口中</strong>，系统会自动补全路径</li>
+        <li>按 <strong>回车</strong>，输入电脑开机密码（输入时不显示，属正常）</li>
         <li>再次打开应用即可</li>
     </ol>
-    <p><em>说明：这是 macOS Gatekeeper 的安全机制导致，不会影响应用本身。</em></p>
+    <p><em>说明：这是 macOS 的安全机制导致，不会损坏应用或电脑。</em></p>
 </div>
 
 <!-- 问题 3 -->
